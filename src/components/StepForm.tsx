@@ -2,9 +2,11 @@
 
 import React from 'react';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
+import { TextField, Button, Container } from '@mui/material';
 import * as Yup from 'yup';
 import formConfig, { FieldConfig } from '../formConfig';
 import ErrorMessage from './ErrorMessage';
+import MuiTextField from './MuiTextField';
 
 interface StepFormProps {
   currentStep: number;
@@ -12,6 +14,7 @@ interface StepFormProps {
   formData: { [key: string]: any };
   setFormData: (formData: { [key: string]: any }) => void;
 }
+
 
 const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formData, setFormData }) => {
   const currentStepConfig = formConfig.find(config => config.step === currentStep);
@@ -64,8 +67,8 @@ const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formDa
               <ErrorMessage fieldName={field.name} errors={errors} touched={touched} />
             </div>
           ))}
-          <button type="button" onClick={handlePrevious} disabled={currentStep === 1}>Previous</button>
-          <button type="submit" disabled={!isValid}>Next</button>
+          <Button type="button" onClick={handlePrevious} disabled={currentStep === 1}>Previous</Button>
+          <Button type="submit" disabled={!isValid} color="primary" variant="contained">Next</Button>
         </Form>
       )}
     </Formik>

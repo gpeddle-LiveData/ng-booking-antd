@@ -1,6 +1,8 @@
 // src/App.tsx
 
 import React, { useState } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
 import StepForm from './components/StepForm';
 import TopBar from './components/TopBar';
 import LeftSidebar from './components/LeftSidebar';
@@ -11,24 +13,26 @@ const App: React.FC = () => {
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
 
   return (
-    <div className="app-container">
-      <TopBar />
-      <LeftSidebar/>
+    <ThemeProvider theme={theme}>
+      <div className="app-container">
+        <TopBar />
+        <LeftSidebar />
 
-      <div className="main-content">
-        <StepForm
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          formData={formData}
-          setFormData={setFormData}
-        />
-      </div>
-      <RightSidebar/>
+        <div className="main-content">
+          <StepForm
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        </div>
+        <RightSidebar />
 
-      <div className="bottom-panel">
-        {/* Previous and Next buttons logic here */}
+        <div className="bottom-panel">
+          {/* Previous and Next buttons logic here */}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 
