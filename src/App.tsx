@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.tsx
 
-function App() {
+import React, { useState } from 'react';
+import StepForm from './components/StepForm';
+import TopBar from './components/TopBar';
+import LeftSidebar from './components/LeftSidebar';
+import RightSidebar from './components/RightSidebar';
+
+const App: React.FC = () => {
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [formData, setFormData] = useState<{ [key: string]: any }>({});
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <TopBar />
+      <LeftSidebar/>
+
+      <div className="main-content">
+        <StepForm
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      </div>
+      <RightSidebar/>
+
+      <div className="bottom-panel">
+        {/* Previous and Next buttons logic here */}
+      </div>
     </div>
   );
-}
+};
 
 export default App;

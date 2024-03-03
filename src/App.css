@@ -1,38 +1,92 @@
-.App {
-  text-align: center;
+/* src/App.css */
+
+/* General layout setup */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Container for the entire layout */
+.app-container {
   display: flex;
-  flex-direction: column;
+  height: 100vh;
+}
+
+/* Top bar styles */
+.top-bar {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  background-color: #333;
+  color: white;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  z-index: 1000;
+}
+
+/* Left sidebar styles */
+.left-sidebar {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Styling for each step in the sidebar */
+.step {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* Main content area where the form steps will be displayed */
+.main-content {
+  flex-grow: 1;
+  padding: 60px 20px 20px 20px; /* Adjust for top bar and sidebars */
+  overflow-y: auto;
+}
+
+/* Right sidebar for action buttons */
+.right-sidebar {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Button styles in the right sidebar */
+.action-button {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.state-button {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+
+/* Bottom panel styles */
+.bottom-panel {
+  position: fixed;
+  bottom: 0;
+  left: 200px; /* Adjust based on left sidebar width */
+  right: 200px; /* Adjust based on right sidebar width */
+  height: 50px;
+  background-color: #333;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
 }
