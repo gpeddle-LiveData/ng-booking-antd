@@ -1,14 +1,13 @@
-// src/components/StepForm/StepForm.tsx
+// src/components/StepForm.tsx
 
 import React from 'react';
-import { Formik, Form, Field, FormikHelpers } from 'formik';
+import { Formik, Form, Field, FormikHelpers, FieldProps } from 'formik';
 import { TextField, Button, Container } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import * as Yup from 'yup';
-import formConfig, { FieldConfig } from '../formConfig';
+import { useFormDefinition } from '../contexts/FormDefinitionContext';
 import ErrorMessage from './ErrorMessage';
 import MuiTextField from './MuiTextField';
-
 
 interface StepFormProps {
   currentStep: number;
@@ -17,60 +16,60 @@ interface StepFormProps {
   setFormData: (formData: { [key: string]: any }) => void;
 }
 
-
 const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formData, setFormData }) => {
-  const currentStepConfig = formConfig.find(config => config.step === currentStep);
+  const formDefinition = useFormDefinition();
+  const currentStepConfig = formDefinition?.find(config => config.step === currentStep);
 
   if (!currentStepConfig) return null;
 
   const validationSchema = Yup.object().shape(
-    currentStepConfig.fields.reduce((acc: any, field: FieldConfig) => {
+    currentStepConfig.fields.reduce((acc: any, field: any) => {
       let validator = Yup.string(); // Default to string for simplicity, adjust based on field.type if needed
 
-      if (field.validationType === 'string' && field.required) {
+      if (field.type === 'string' && field.required) {
         validator = validator.required('This field is required');
       }
 
-      // TODO: more validation types 
+      // TODO: add more validation types based on field.type
 
       acc[field.name] = validator;
       return acc;
     }, {})
   );
 
-  const handleNext = (values: { [key: string]: any }, actions: FormikHelpers<{ [key: string]: any }>) => {
-    if (currentStep < formConfig.length) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      // Final submit logic here
-    }
-    actions.setTouched({});
-    actions.setSubmitting(false);
-  };
-
-  const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
   return (
     <Formik
       initialValues={formData}
       validationSchema={validationSchema}
-      onSubmit={handleNext}
+      onSubmit={(values, actions) => {
+        if (currentStep < (formDefinition?.length || 0)) {
+          setCurrentStep(currentStep + 1);
+        } else {
+          // Final submit logic here
+        }
+        actions.setTouched({});
+        actions.setSubmitting(false);
+      }}
     >
-      {({ errors, touched, isValid, handleSubmit }) => (
+      {formikProps => (
         <Form>
           {currentStepConfig.fields.map(field => (
             <div key={field.name}>
-              <label htmlFor={field.name}>{field.label}</label>
-              <Field name={field.name} type={field.type} />
-              <ErrorMessage fieldName={field.name} errors={errors} touched={touched} />
+              <Field name={field.name}>
+                {({ field: formikField }: FieldProps) => (
+                  <MuiTextField
+                    field={formikField}
+                    form={formikProps}
+                    label={field.label}
+                    type={field.type}
+                  />
+                )}
+              </Field>
+              <ErrorMessage fieldName={field.name} errors={formikProps.errors} touched={formikProps.touched} />
             </div>
           ))}
-          <Button type="button" onClick={handlePrevious} disabled={currentStep === 1}>Previous</Button>
-          <Button type="submit" disabled={!isValid} color="primary" variant="contained">Next</Button>
+          <Button type="button" onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep === 1}>Previous</Button>
+          <Button type="submit" disabled={!formikProps.isValid} color="primary" variant="contained">Next</Button>
         </Form>
       )}
     </Formik>

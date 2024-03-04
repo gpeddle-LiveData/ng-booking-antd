@@ -12,6 +12,7 @@ import theme from './theme';
 import StepForm from './components/StepForm';
 import LeftSidebar from './components/LeftSidebar';
 import RightSidebar from './components/RightSidebar';
+import { FormDefinitionProvider } from './contexts/FormDefinitionContext';
 
 const drawerWidth = 240;
 
@@ -22,6 +23,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <FormDefinitionProvider>
       <Box sx={{ display: 'flex' }}>
         <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
           <Toolbar>
@@ -50,6 +52,7 @@ const App: React.FC = () => {
         </Box>
         <RightSidebar />
       </Box>
+      </FormDefinitionProvider>
     </ThemeProvider>
   );
 };

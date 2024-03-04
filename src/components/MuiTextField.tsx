@@ -1,27 +1,27 @@
 // src/components/MuiTextField.tsx
 
 import React from 'react';
-import { FieldProps } from 'formik';
 import { TextField } from '@mui/material';
+import { FieldInputProps, FormikProps } from 'formik';
 
-interface MuiTextFieldProps extends FieldProps {
+interface MuiTextFieldProps {
+  field: FieldInputProps<any>;
+  form: FormikProps<any>;
   label: string;
+  type: string;
 }
 
-const MuiTextField: React.FC<MuiTextFieldProps> = ({ field, form, label, ...props }) => {
-  const errorText = form.touched[field.name] && form.errors[field.name];
-  const helperText = typeof errorText === 'string' ? errorText : '';
-
+const MuiTextField: React.FC<MuiTextFieldProps> = ({ field, form, label, type }) => {
+  const errorText = form.touched[field.name] && form.errors[field.name] ? String(form.errors[field.name]) : '';
   return (
     <TextField
       {...field}
-      {...props}
       label={label}
-      helperText={helperText}
-      error={!!errorText}
+      type={type}
+      helperText={errorText}
+      error={!!form.touched[field.name] && !!form.errors[field.name]}
     />
   );
 };
 
 export default MuiTextField;
-export type { MuiTextFieldProps };
