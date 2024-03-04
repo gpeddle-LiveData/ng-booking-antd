@@ -116,6 +116,12 @@
           "label": "Procedure Time",
           "type": "time",
           "required": true
+        },
+        {
+          "name": "procedureNotes",
+          "label": "Procedure Notes",
+          "type": "text",
+          "required": true
         }
       ]
     }
