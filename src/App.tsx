@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
 import theme from './theme';
 import StepForm from './components/StepForm';
 import TopBar from './components/TopBar';
@@ -16,16 +17,22 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <div className="app-container">
         <TopBar />
-        <LeftSidebar />
+        <Grid container>
+          <Grid item xs={12} md={3}> {/* Sidebar */}
+            <LeftSidebar />
+          </Grid>
+          <Grid item xs={12} md={9}>
 
-        <div className="main-content">
-          <StepForm
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-            formData={formData}
-            setFormData={setFormData}
-          />
-        </div>
+                <div className="main-content">
+                  <StepForm
+                    currentStep={currentStep}
+                    setCurrentStep={setCurrentStep}
+                    formData={formData}
+                    setFormData={setFormData}
+                  />
+                </div>
+          </Grid>
+        </Grid>
         <RightSidebar />
 
         <div className="bottom-panel">
