@@ -32,7 +32,7 @@ const App: React.FC = () => {
             </Typography>
           </Toolbar>
         </AppBar>
-        <LeftSidebar />
+        <LeftSidebar setCurrentStep={setCurrentStep} currentStep={currentStep} /> {/* Pass the required props */}
         <Box
           component="main"
           sx={{
