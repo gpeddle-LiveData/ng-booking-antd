@@ -48,7 +48,7 @@ const LeftSidebar: React.FC<{ setCurrentStep: (step: number) => void; currentSte
                               position: 'absolute',
                               left: '25px', // Adjusted based on your feedback
                               width: '2px',
-                              backgroundColor: 'gray',
+                              backgroundColor: '#999',
                               top: index === 0 ? '50%' : '0',
                               bottom: index === formDefinition.length - 1 ? '50%' : '0',
                               zIndex: 0, // Ensure the line is behind the icons
@@ -59,7 +59,7 @@ const LeftSidebar: React.FC<{ setCurrentStep: (step: number) => void; currentSte
                             <FiberManualRecordIcon 
                                 fontSize="small" 
                                 sx={{ 
-                                    color: currentStep === step.step ? theme.palette.primary.main : 'inherit'
+                                    color: currentStep === step.step ? theme.palette.primary.main : '#999'
                                 }} 
                             />
                         </ListItemIcon>
