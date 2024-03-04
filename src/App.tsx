@@ -2,17 +2,18 @@
 
 import React, { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline'; 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box'; 
 
 import theme from './theme';
 import StepForm from './components/StepForm';
-import TopBar from './components/TopBar';
 import LeftSidebar from './components/LeftSidebar';
 import RightSidebar from './components/RightSidebar';
+
+const drawerWidth = 240;
 
 const App: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -20,38 +21,35 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="app-container">
-        <AppBar position="static">
+      <CssBaseline />
+      <Box sx={{ display: 'flex' }}>
+        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
           <Toolbar>
-            <Typography variant="h6" component="div">
-              Step Form Application
+            <Typography variant="h6" noWrap component="div">
+              LiveData Booking
             </Typography>
           </Toolbar>
         </AppBar>
-        <TopBar />
-        <Grid container>
-          <Grid item xs={12} md={3}> {/* Sidebar */}
-            <LeftSidebar />
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Paper elevation={3}>
-              <div className="main-content">
-                <StepForm
-                  currentStep={currentStep}
-                  setCurrentStep={setCurrentStep}
-                  formData={formData}
-                  setFormData={setFormData}
-                />
-              </div>
-            </Paper>
-          </Grid>
-        </Grid>
+        <LeftSidebar />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            width: `calc(100% - ${drawerWidth * 2}px)`,
+            marginLeft: `${drawerWidth}px`, // Ensure main content is not under the left sidebar
+          }}
+        >
+          <Toolbar /> {/* Offset content below the AppBar */}
+          <StepForm
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        </Box>
         <RightSidebar />
-
-        <div className="bottom-panel">
-          {/* Previous and Next buttons logic here */}
-        </div>
-      </div>
+      </Box>
     </ThemeProvider>
   );
 };
