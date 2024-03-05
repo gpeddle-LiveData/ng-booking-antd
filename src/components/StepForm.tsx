@@ -1,9 +1,8 @@
 // src/components/StepForm.tsx
 
 import React from 'react';
-import { Formik, Form, Field, FormikHelpers, FieldProps } from 'formik';
-import { TextField, Button, Container } from '@mui/material';
-import Paper from '@mui/material/Paper';
+import { Formik, Form, Field, FieldProps } from 'formik';
+import { Button, Box } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormDefinition } from '../contexts/FormDefinitionContext';
 import ErrorMessage from './ErrorMessage';
@@ -30,8 +29,6 @@ const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formDa
         validator = validator.required('This field is required');
       }
 
-      // TODO: add more validation types based on field.type
-
       acc[field.name] = validator;
       return acc;
     }, {})
@@ -52,25 +49,29 @@ const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formDa
       }}
     >
       {formikProps => (
-        <Form>
-          {currentStepConfig.fields.map(field => (
-            <div key={field.name}>
-              <Field name={field.name}>
-                {({ field: formikField }: FieldProps) => (
-                  <MuiTextField
-                    field={formikField}
-                    form={formikProps}
-                    label={field.label}
-                    type={field.type}
-                  />
-                )}
-              </Field>
-              <ErrorMessage fieldName={field.name} errors={formikProps.errors} touched={formikProps.touched} />
+        <Box sx={{ margin: '0px', width: '100%' }}> {/* Adjust this box to control the form's position */}
+          <Form>
+            {currentStepConfig.fields.map(field => (
+              <div key={field.name}>
+                <Field name={field.name}>
+                  {({ field: formikField }: FieldProps) => (
+                    <MuiTextField
+                      field={formikField}
+                      form={formikProps}
+                      label={field.label}
+                      type={field.type}
+                    />
+                  )}
+                </Field>
+                <ErrorMessage fieldName={field.name} errors={formikProps.errors} touched={formikProps.touched} />
+              </div>
+            ))}
+            <div style={{ marginTop: '20px' }}>
+              <Button type="button" onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep === 1}>Previous</Button>
+              <Button type="submit" disabled={!formikProps.isValid} color="primary" variant="contained">Next</Button>
             </div>
-          ))}
-          <Button type="button" onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep === 1}>Previous</Button>
-          <Button type="submit" disabled={!formikProps.isValid} color="primary" variant="contained">Next</Button>
-        </Form>
+          </Form>
+        </Box>
       )}
     </Formik>
   );

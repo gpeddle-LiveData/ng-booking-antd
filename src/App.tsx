@@ -39,7 +39,7 @@ const App: React.FC = () => {
             flexGrow: 1,
             p: 3,
             width: `calc(100% - ${drawerWidth * 2}px)`,
-            marginLeft: `${drawerWidth}px`, // Ensure main content is not under the left sidebar
+            ///marginLeft: `${drawerWidth}px`, // Ensure main content is not under the left sidebar
           }}
         >
           <Toolbar /> {/* Offset content below the AppBar */}
