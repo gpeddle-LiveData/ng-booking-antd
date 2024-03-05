@@ -6,7 +6,8 @@ import { Button, Box } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormDefinition } from '../contexts/FormDefinitionContext';
 import ErrorMessage from './ErrorMessage';
-import MuiTextField from './MuiTextField';
+//import MuiTextField from './MuiTextField';
+import TextField from './TextField';
 
 interface StepFormProps {
   currentStep: number;
@@ -55,7 +56,7 @@ const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formDa
               <div key={field.name}>
                 <Field name={field.name}>
                   {({ field: formikField }: FieldProps) => (
-                    <MuiTextField
+                    <TextField
                       field={formikField}
                       form={formikProps}
                       label={field.label}
