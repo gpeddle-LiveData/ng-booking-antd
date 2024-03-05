@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import { Button, Box } from '@mui/material';
+import { Button } from 'antd';
+
 import * as Yup from 'yup';
 import { useFormDefinition } from '../contexts/FormDefinitionContext';
 import ErrorMessage from './ErrorMessage';
-//import MuiTextField from './MuiTextField';
+
 import TextField from './TextField';
 
 interface StepFormProps {
@@ -50,7 +51,7 @@ const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formDa
       }}
     >
       {formikProps => (
-        <Box sx={{ margin: '0px', width: '100%' }}> {/* Adjust this box to control the form's position */}
+        <div> {/* Adjust this div to control the form's position */}
           <Form>
             {currentStepConfig.fields.map(field => (
               <div key={field.name}>
@@ -68,11 +69,11 @@ const StepForm: React.FC<StepFormProps> = ({ currentStep, setCurrentStep, formDa
               </div>
             ))}
             <div style={{ marginTop: '20px' }}>
-              <Button type="button" onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep === 1}>Previous</Button>
-              <Button type="submit" disabled={!formikProps.isValid} color="primary" variant="contained">Next</Button>
+              <Button htmlType="button" onClick={() => setCurrentStep(currentStep - 1)} disabled={currentStep === 1}>Previous</Button>
+              <Button htmlType="submit" disabled={!formikProps.isValid} color="primary" >Next</Button>
             </div>
           </Form>
-        </Box>
+        </div>
       )}
     </Formik>
   );
